@@ -8,18 +8,10 @@ In Pokemon Showdown, at any given moment during a battle, the battle's state can
 Instead of keeping battles and training data in memory, the database persists episodes, transitions, and model versions so training can resume, analytics can run independently, and the system behaves like a real stateful ML service rather than a single script.
 
 # ERD
-(See Github repo. I still need to add more to the ERD, so this is just a start.)
+(See Github repo - `erd.png`.)
 
 # System Design
-The RL model will be implemented using Python. The database will be implemented using Postgres.
-
-[Self-Play Script] $\rightarrow$ (writes episodes + transitions) $\rightarrow$ [Postgres]
-
-[Training Script] $\leftrightarrow$ (reads batches / writes model_version) $\leftrightarrow$ [Postgres]
-
-[Evaluation Script] $\rightarrow$ (writes match results) $\rightarrow$ [Postgres]
-
-[API] $\rightarrow$ (reads latest model + logs requests) $\rightarrow$ [Postgres]
+(See Github repo - `system_design.png`.)
 
 # Initial Goals
 * **Week 1 (3 Nov - 9 Nov)**
