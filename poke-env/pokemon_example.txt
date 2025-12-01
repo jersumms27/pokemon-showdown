@@ -1,0 +1,75 @@
+ability (<class 'str'>): noguard
+active (<class 'bool'>): True
+available_moves_from_request (<class 'method'>): <bound method Pokemon.available_moves_from_request of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+available_z_moves (<class 'list'>): []
+base_species (<class 'str'>): lycanroc
+base_stats (<class 'dict'>): {'atk': 115, 'def': 75, 'hp': 85, 'spa': 55, 'spd': 75, 'spe': 82}
+boost (<class 'method'>): <bound method Pokemon.boost of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+boosts (<class 'dict'>): {'accuracy': 0, 'atk': 0, 'def': 0, 'evasion': 0, 'spa': 0, 'spd': 0, 'spe': 0}
+cant_move (<class 'method'>): <bound method Pokemon.cant_move of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+clear_active (<class 'method'>): <bound method Pokemon.clear_active of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+clear_boosts (<class 'method'>): <bound method Pokemon.clear_boosts of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+clear_negative_boosts (<class 'method'>): <bound method Pokemon.clear_negative_boosts of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+clear_positive_boosts (<class 'method'>): <bound method Pokemon.clear_positive_boosts of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+copy_boosts (<class 'method'>): <bound method Pokemon.copy_boosts of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+cure_status (<class 'method'>): <bound method Pokemon.cure_status of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+current_hp (<class 'int'>): 296
+current_hp_fraction (<class 'float'>): 1.0
+damage (<class 'method'>): <bound method Pokemon.damage of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+damage_multiplier (<class 'method'>): <bound method Pokemon.damage_multiplier of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+effects (<class 'dict'>): {}
+end_effect (<class 'method'>): <bound method Pokemon.end_effect of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+end_item (<class 'method'>): <bound method Pokemon.end_item of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+end_turn (<class 'method'>): <bound method Pokemon.end_turn of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+faint (<class 'method'>): <bound method Pokemon.faint of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+fainted (<class 'bool'>): False
+first_turn (<class 'bool'>): True
+forme_change (<class 'method'>): <bound method Pokemon.forme_change of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+gender (<enum 'PokemonGender'>): MALE (pokemon gender) object
+heal (<class 'method'>): <bound method Pokemon.heal of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+height (<class 'float'>): 1.1
+identifier (<class 'method'>): <bound method Pokemon.identifier of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+invert_boosts (<class 'method'>): <bound method Pokemon.invert_boosts of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+is_dynamaxed (<class 'bool'>): False
+is_terastallized (<class 'bool'>): False
+item (<class 'str'>): lifeorb
+level (<class 'int'>): 89
+max_hp (<class 'int'>): 296
+mega_evolve (<class 'method'>): <bound method Pokemon.mega_evolve of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+moved (<class 'method'>): <bound method Pokemon.moved of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+moves (<class 'dict'>): {'suckerpunch': suckerpunch (Move object), 'closecombat': closecombat (Move object), 'stoneedge': stoneedge (Move object), 'swordsdance': swordsdance (Move object)}
+must_recharge (<class 'bool'>): False
+name (<class 'str'>): Lycanroc
+original_types (<class 'list'>): [<PokemonType.ROCK: 16>]
+pokeball (<class 'str'>): pokeball
+possible_abilities (<class 'list'>): ['keeneye', 'vitalspirit', 'noguard']
+prepare (<class 'method'>): <bound method Pokemon.prepare of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+preparing (<class 'bool'>): False
+preparing_move (<class 'NoneType'>): None
+preparing_target (<class 'NoneType'>): None
+primal (<class 'method'>): <bound method Pokemon.primal of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+protect_counter (<class 'int'>): 0
+revealed (<class 'bool'>): True
+set_boost (<class 'method'>): <bound method Pokemon.set_boost of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+set_hp (<class 'method'>): <bound method Pokemon.set_hp of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+set_hp_status (<class 'method'>): <bound method Pokemon.set_hp_status of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+set_temporary_ability (<class 'method'>): <bound method Pokemon.set_temporary_ability of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+shiny (<class 'bool'>): False
+species (<class 'str'>): lycanrocmidnight
+stab_multiplier (<class 'float'>): 1.5
+start_effect (<class 'method'>): <bound method Pokemon.start_effect of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+stats (<class 'dict'>): {'hp': 296, 'atk': 255, 'def': 184, 'spa': 149, 'spd': 184, 'spe': 197}
+status (<class 'NoneType'>): None
+status_counter (<class 'int'>): 0
+switch_in (<class 'method'>): <bound method Pokemon.switch_in of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+switch_out (<class 'method'>): <bound method Pokemon.switch_out of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+tera_type (<class 'NoneType'>): None
+terastallize (<class 'method'>): <bound method Pokemon.terastallize of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+transform (<class 'method'>): <bound method Pokemon.transform of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+type_1 (<enum 'PokemonType'>): ROCK (pokemon type) object
+type_2 (<class 'NoneType'>): None
+types (<class 'list'>): [<PokemonType.ROCK: 16>]
+update_from_request (<class 'method'>): <bound method Pokemon.update_from_request of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+used_z_move (<class 'method'>): <bound method Pokemon.used_z_move of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+was_illusioned (<class 'method'>): <bound method Pokemon.was_illusioned of lycanrocmidnight (pokemon object) [Active: True, Status: None]>
+weight (<class 'int'>): 25
