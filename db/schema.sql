@@ -33,7 +33,7 @@ CREATE TABLE transition (
     step_index SMALLINT NOT NULL,
     episode_id BIGINT NOT NULL REFERENCES episode(episode_id),
     state_id BIGINT NOT NULL REFERENCES battle_state(state_id),
-    new_state BIGINT NOT NULL REFERENCES battle_state(state_id),
+    new_state_id BIGINT NOT NULL REFERENCES battle_state(state_id),
     action SMALLINT NOT NULL,
     reward DOUBLE PRECISION NOT NULL DEFAULT 0.0,
     terminal BOOLEAN NOT NULL DEFAULT FALSE,
