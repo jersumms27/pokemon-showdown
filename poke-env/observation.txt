@@ -1,0 +1,533 @@
+Observation(
+    side_conditions={
+        <SideCondition.STEALTH_ROCK: 19>: 32
+    },
+    opponent_side_conditions={},
+    weather={},
+    fields={},
+    active_pokemon=ObservedPokemon(
+        species='vaporeon',
+        level=86,
+        name='Vaporeon',
+        ability='waterabsorb',
+        boosts={
+            'accuracy': 0,
+            'atk': 0,
+            'def': 0,
+            'evasion': 0,
+            'spa': 0,
+            'spd': 0,
+            'spe': 0
+        },
+        current_hp_fraction=0.9807692307692307,
+        effects={},
+        is_dynamaxed=False,
+        is_terastallized=False,
+        item='leftovers',
+        gender=<PokemonGender.MALE: 2>,
+        moves=OrderedDict({
+            'roar': roar (Move object),
+            'protect': protect (Move object),
+            'wish': wish (Move object),
+            'scald': scald (Move object)
+        }),
+        tera_type=None,
+        shiny=False,
+        stats={
+            'hp': 364,
+            'atk': 116,
+            'def': 152,
+            'spa': 238,
+            'spd': 213,
+            'spe': 161
+        },
+        status=None
+    ),
+    opponent_active_pokemon=ObservedPokemon(
+        species='whiscash',
+        level=88,
+        name='Whiscash',
+        ability=None,
+        boosts={
+            'accuracy': 0,
+            'atk': 0,
+            'def': 0,
+            'evasion': 0,
+            'spa': 0,
+            'spd': 0,
+            'spe': 0
+        },
+        current_hp_fraction=0.34,
+        effects={},
+        is_dynamaxed=False,
+        is_terastallized=False,
+        item='leftovers',
+        gender=<PokemonGender.MALE: 2>,
+        moves=OrderedDict({
+            'hydropump': hydropump (Move object),
+            'icebeam': icebeam (Move object),
+            'stealthrock': stealthrock (Move object),
+            'earthquake': earthquake (Move object)
+        }),
+        tera_type=None,
+        shiny=False,
+        stats={
+            'hp': None,
+            'atk': None,
+            'def': None,
+            'spa': None,
+            'spd': None,
+            'spe': None
+        },
+        status=<Status.BRN: 1>
+    ),
+    team={
+        'p1: Porygon2': ObservedPokemon(
+            species='porygon2',
+            level=81,
+            name='Porygon2',
+            ability='download',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=True,
+            item='eviolite',
+            gender=<PokemonGender.NEUTRAL: 3>,
+            moves=OrderedDict({
+                'icebeam': icebeam (Move object),
+                'recover': recover (Move object),
+                'triattack': triattack (Move object),
+                'discharge': discharge (Move object)
+            }),
+            tera_type=<PokemonType.ELECTRIC: 4>,
+            shiny=False,
+            stats={
+                'hp': 270,
+                'atk': 134,
+                'def': 192,
+                'spa': 217,
+                'spd': 201,
+                'spe': 144
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p1: Vaporeon': ObservedPokemon(
+            species='vaporeon',
+            level=86,
+            name='Vaporeon',
+            ability='waterabsorb',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0.9807692307692307,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='leftovers',
+            gender=<PokemonGender.MALE: 2>,
+            moves=OrderedDict({
+                'roar': roar (Move object),
+                'protect': protect (Move object),
+                'wish': wish (Move object),
+                'scald': scald (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': 364,
+                'atk': 116,
+                'def': 152,
+                'spa': 238,
+                'spd': 213,
+                'spe': 161
+            },
+            status=None
+        ),
+        'p1: Weavile': ObservedPokemon(
+            species='weavile',
+            level=79,
+            name='Weavile',
+            ability='pickpocket',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='heavydutyboots',
+            gender=<PokemonGender.MALE: 2>,
+            moves=OrderedDict({
+                'knockoff': knockoff (Move object),
+                'tripleaxel': tripleaxel (Move object),
+                'lowkick': lowkick (Move object),
+                'swordsdance': swordsdance (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': 240,
+                'atk': 235,
+                'def': 148,
+                'spa': 117,
+                'spd': 180,
+                'spe': 243
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p1: Noivern': ObservedPokemon(
+            species='noivern',
+            level=82,
+            name='Noivern',
+            ability='infiltrator',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='heavydutyboots',
+            gender=<PokemonGender.FEMALE: 1>,
+            moves=OrderedDict({
+                'roost': roost (Move object),
+                'dracometeor': dracometeor (Move object),
+                'flamethrower': flamethrower (Move object),
+                'hurricane': hurricane (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': 274,
+                'atk': 119,
+                'def': 178,
+                'spa': 206,
+                'spd': 178,
+                'spe': 249
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p1: Crawdaunt': ObservedPokemon(
+            species='crawdaunt',
+            level=84,
+            name='Crawdaunt',
+            ability='adaptability',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='lifeorb',
+            gender=<PokemonGender.FEMALE: 1>,
+            moves=OrderedDict({
+                'knockoff': knockoff (Move object),
+                'crabhammer': crabhammer (Move object),
+                'closecombat': closecombat (Move object),
+                'dragondance': dragondance (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': 243,
+                'atk': 250,
+                'def': 191,
+                'spa': 199,
+                'spd': 141,
+                'spe': 141
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p1: Dedenne': ObservedPokemon(
+            species='dedenne',
+            level=88,
+            name='Dedenne',
+            ability='cheekpouch',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='',
+            gender=<PokemonGender.FEMALE: 1>,
+            moves=OrderedDict({
+                'thunderbolt': thunderbolt (Move object),
+                'nuzzle': nuzzle (Move object),
+                'uturn': uturn (Move object),
+                'dazzlinggleam': dazzlinggleam (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': 261,
+                'atk': 152,
+                'def': 151,
+                'spa': 193,
+                'spd': 168,
+                'spe': 228
+            },
+            status=<Status.FNT: 2>
+        )
+    },
+    opponent_team={
+        'p2: Flamigo': ObservedPokemon(
+            species='flamigo',
+            level=82,
+            name='Flamigo',
+            ability=None,
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='lifeorb',
+            gender=<PokemonGender.MALE: 2>,
+            moves=OrderedDict({
+                'swordsdance': swordsdance (Move object),
+                'bravebird': bravebird (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': None,
+                'atk': None,
+                'def': None,
+                'spa': None,
+                'spd': None,
+                'spe': None
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p2: Arceus': ObservedPokemon(
+            species='arceusgrass',
+            level=72,
+            name='Arceus',
+            ability='multitype',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='unknown_item',
+            gender=<PokemonGender.NEUTRAL: 3>,
+            moves=OrderedDict({
+                'icebeam': icebeam (Move object),
+                'judgment': judgment (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': None,
+                'atk': None,
+                'def': None,
+                'spa': None,
+                'spd': None,
+                'spe': None
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p2: Whiscash': ObservedPokemon(
+            species='whiscash',
+            level=88,
+            name='Whiscash',
+            ability=None,
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0.34,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='leftovers',
+            gender=<PokemonGender.MALE: 2>,
+            moves=OrderedDict({
+                'hydropump': hydropump (Move object),
+                'icebeam': icebeam (Move object),
+                'stealthrock': stealthrock (Move object),
+                'earthquake': earthquake (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': None,
+                'atk': None,
+                'def': None,
+                'spa': None,
+                'spd': None,
+                'spe': None
+            },
+            status=<Status.BRN: 1>
+        ),
+        'p2: Mismagius': ObservedPokemon(
+            species='mismagius',
+            level=86,
+            name='Mismagius',
+            ability='levitate',
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='unknown_item',
+            gender=<PokemonGender.FEMALE: 1>,
+            moves=OrderedDict({
+                'dazzlinggleam': dazzlinggleam (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': None,
+                'atk': None,
+                'def': None,
+                'spa': None,
+                'spd': None,
+                'spe': None
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p2: Indeedee': ObservedPokemon(
+            species='indeedeef',
+            level=90,
+            name='Indeedee',
+            ability=None,
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=False,
+            item='unknown_item',
+            gender=<PokemonGender.FEMALE: 1>,
+            moves=OrderedDict({
+                'dazzlinggleam': dazzlinggleam (Move object)
+            }),
+            tera_type=None,
+            shiny=False,
+            stats={
+                'hp': None,
+                'atk': None,
+                'def': None,
+                'spa': None,
+                'spd': None,
+                'spe': None
+            },
+            status=<Status.FNT: 2>
+        ),
+        'p2: Squawkabilly': ObservedPokemon(
+            species='squawkabillyblue',
+            level=85,
+            name='Squawkabilly',
+            ability=None,
+            boosts={
+                'accuracy': 0,
+                'atk': 0,
+                'def': 0,
+                'evasion': 0,
+                'spa': 0,
+                'spd': 0,
+                'spe': 0
+            },
+            current_hp_fraction=0,
+            effects={},
+            is_dynamaxed=False,
+            is_terastallized=True,
+            item='unknown_item',
+            gender=<PokemonGender.MALE: 2>,
+            moves=OrderedDict({
+                'facade': facade (Move object),
+                'bravebird': bravebird (Move object)
+            }),
+            tera_type=<PokemonType.NORMAL: 13>,
+            shiny=False,
+            stats={
+                'hp': None,
+                'atk': None,
+                'def': None,
+                'spa': None,
+                'spd': None,
+                'spe': None
+            },
+            status=<Status.FNT: 2>
+        )
+    },
+    events=[]
+)

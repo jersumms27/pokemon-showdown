@@ -13,7 +13,11 @@ import hashlib
 EMBEDDING_DIM: int = 1024
 
 
-def get_connection(dbname: str, user: str, password: str, host: str, port: int) -> connection:
+def get_connection(dbname: str,
+                   user: str,
+                   password: str,
+                   host: str,
+                   port: int) -> connection:
     conn = psycopg2.connect(
         dbname=dbname,
         user=user,
@@ -152,9 +156,10 @@ def insert_battle_embedding(conn: connection, state_id: int, embedding: list[flo
         cur.execute(
             """
             INSERT INTO battle_state_embedding (
+                state_id,
                 embedding
             )
-            VALUES (%s)
+            VALUES (%s, %s)
 
             RETURNING embedding_id
             """,
@@ -167,3 +172,24 @@ def insert_battle_embedding(conn: connection, state_id: int, embedding: list[flo
         (embedding_id,) = cur.fetchone()
     
     return embedding_id
+
+
+def get_best_transitions(conn: connection, batch_size: int) -> list[tuple[Any, ...]]:
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT
+                transition_id,
+                state_id,
+                new_state_id,
+                action,
+                reward,
+                terminal
+            FROM transition
+            ORDER BY reward DESC
+            LIMIT %s
+            """,
+            (batch_size,),
+        )
+        
+        return cur.fetchall()

@@ -16,7 +16,7 @@ CREATE TABLE episode (
 
 CREATE TABLE battle_state (
     state_id BIGSERIAL PRIMARY KEY,
-    state_hash BIGINT NOT NULL,
+    state_hash BIGINT NOT NULL UNIQUE,
     raw_state JSONB NOT NULL,
     last_seen TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -37,5 +37,10 @@ CREATE TABLE transition (
     action SMALLINT NOT NULL,
     reward DOUBLE PRECISION NOT NULL DEFAULT 0.0,
     terminal BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    td_error DOUBLE PRECISION,
     UNIQUE (episode_id, step_index)
 );
+
+CREATE INDEX ON transition (episode_id);
+CREATE INDEX ON transition (state_id);
