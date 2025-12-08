@@ -9,4 +9,4 @@
 | 12/3/2025 | Finish data insertion functions | 3
 | 12/4/2025 | Implement DQN | 2
 | 12/6/2025 | Create state representations: json and vector | 7
-| **TOTAL** | | **14** |
+| **TOTAL** | | **24** |
