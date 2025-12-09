@@ -90,7 +90,6 @@ class State:
             state_dict["active_pokemon"][f"move_{i+1}"]["accuracy"] = m.accuracy
             state_dict["active_pokemon"][f"move_{i+1}"]["type"] = _normalize(m.type.name)
             state_dict["active_pokemon"][f"move_{i+1}"]["base_power"] = m.base_power
-            # state_dict["active_pokemon"][f"move_{i+1}"]["boosts"] = m.boosts
             state_dict["active_pokemon"][f"move_{i+1}"]["category"] = _normalize(m.category.name)
             state_dict["active_pokemon"][f"move_{i+1}"]["crit_ratio"] = m.crit_ratio
         state_dict["active_pokemon"]["tera_type"] = _normalize(obs.active_pokemon.tera_type.name) if obs.active_pokemon.tera_type is not None else None
@@ -116,7 +115,6 @@ class State:
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["accuracy"] = m.accuracy
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["type"] = _normalize(m.type.name)
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["base_power"] = m.base_power
-            # state_dict["opp_active_pokemon"][f"move_{i+1}"]["boosts"] = m.boosts
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["category"] = _normalize(m.category.name)
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["crit_ratio"] = m.crit_ratio
         state_dict["opp_active_pokemon"]["tera_type"] = _normalize(obs.opponent_active_pokemon.tera_type.name) if obs.opponent_active_pokemon.tera_type is not None else None
@@ -145,7 +143,6 @@ class State:
                 state_dict[f"pokemon_{i+1}"][f"move_{j+1}"]["accuracy"] = m.accuracy
                 state_dict[f"pokemon_{i+1}"][f"move_{j+1}"]["type"] = _normalize(m.type.name)
                 state_dict[f"pokemon_{i+1}"][f"move_{j+1}"]["base_power"] = m.base_power
-                # state_dict[f"pokemon_{i+1}"][f"move_{j+1}"]["boosts"] = m.boosts
                 state_dict[f"pokemon_{i+1}"][f"move_{j+1}"]["category"] = _normalize(m.category.name)
                 state_dict[f"pokemon_{i+1}"][f"move_{j+1}"]["crit_ratio"] = m.crit_ratio
             state_dict[f"pokemon_{i+1}"]["tera_type"] = _normalize(p.tera_type.name) if p.tera_type is not None else None
@@ -174,7 +171,6 @@ class State:
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["accuracy"] = m.accuracy
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["type"] = _normalize(m.type.name)
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["base_power"] = m.base_power
-                # state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["boosts"] = m.boosts
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["category"] = _normalize(m.category.name)
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["crit_ratio"] = m.crit_ratio
             state_dict[f"opp_pokemon_{i+1}"]["tera_type"] = _normalize(p.tera_type.name) if p.tera_type is not None else None
@@ -216,8 +212,6 @@ class State:
             move_vector.append(TYPE_IDX[self.state_dict[pokemon_key][move_key]["type"]])
             # base power
             move_vector.append(self.state_dict[pokemon_key][move_key]["base_power"])
-            # boosts
-            # move_vector.extend(list(self.state_dict[pokemon_key][move_key]["boosts"].values()))
             # category
             move_vector.extend([float(self.state_dict[pokemon_key][move_key]["category"] == MOVE_CATS[i]) for i in range(len(MOVE_CATS))])
             # crit ratio

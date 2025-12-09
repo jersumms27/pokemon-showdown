@@ -3,8 +3,8 @@ import torch.nn.functional as F
 from torch import Tensor
 
 class DQN(nn.Module):
-    def __init__(self, state_size: int,
-                 num_actions: int,
+    def __init__(self, state_size: int = 1787,
+                 num_actions: int = 22,
                  hidden_sizes: list[int] = [],
                  dropout: float = 0.0
     ) -> None:

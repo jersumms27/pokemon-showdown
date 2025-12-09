@@ -9,4 +9,6 @@
 | 12/3/2025 | Finish data insertion functions | 3
 | 12/4/2025 | Implement DQN | 2
 | 12/6/2025 | Create state representations: json and vector | 7
-| **TOTAL** | | **24** |
+| 12/7/2025 | Debug state vector | 3
+| 12/8/2025 | Create and test player object | 3
+| **TOTAL** | | **30** |
