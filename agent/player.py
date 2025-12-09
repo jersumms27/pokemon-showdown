@@ -25,6 +25,7 @@ class BotBoi(Player):
         self.epsilon: float = 0.1
 
         self.memory: ExperienceReplay | None = None
+        self.episode_buffer: list[Transition] = []
         self.last_state: State | None = None
         self.last_action: int | None = None
 
@@ -95,6 +96,8 @@ class BotBoi(Player):
             transition: Transition = Transition(self.last_state, self.last_action, state)
             self.memory.push(transition)
 
+            self.episode_buffer.append(transition)
+
         self.last_state = state
         self.last_action = action
     
@@ -108,6 +111,9 @@ class BotBoi(Player):
             q_values: Tensor = self.model(state_vec)[0].cpu().numpy()
         
         mask: ndarray = self._get_action_mask(battle)
+        if not mask.any():
+            return -1
+
         q_values[~mask] = -np.inf
 
         if np.random.rand() < self.epsilon:
@@ -122,18 +128,20 @@ class BotBoi(Player):
     
 
     def choose_move(self, battle: AbstractBattle) -> BattleOrder | Awaitable[BattleOrder]:
-        action: SingleBattleOrder = self._idx_to_action(battle, self.act(battle))
+        idx: int = self.act(battle)
+        action: SingleBattleOrder = self._idx_to_action(battle, idx) if idx != -1 else super().choose_random_move(battle)
         return action
     
 
-    async def battle(self, opponent: Player, memory: ExperienceReplay) -> None:
+    async def battle(self, opponent: Player, memory: ExperienceReplay, episode_buffer: list[Transition]) -> None:
         self.memory = memory
+        self.episode_buffer = episode_buffer
         self.last_state = None
         self.last_action = None
 
         await self.battle_against(opponent)
-        print("finished battle")
 
         self.memory = None
+        self.episode_buffer = []
         self.last_state = None
         self.last_action = None

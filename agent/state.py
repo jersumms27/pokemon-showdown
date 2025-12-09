@@ -5,7 +5,7 @@ import numpy as np
 from numpy import ndarray
 
 def _normalize(s: str) -> str:
-    return s.lower().replace(" ", "")
+    return s.lower().replace(" ", "").replace("-", "")
 
 with open("poke-env/pokemon.json") as f:
     POKEMON: dict[str, Any] = json.load(f)
@@ -82,11 +82,11 @@ class State:
 
         state_dict["active_pokemon"] = {}
         state_dict["active_pokemon"]["species"] = obs.active_pokemon.species
-        state_dict["active_pokemon"]["type_1"] = _normalize(_get_pokemon(obs.active_pokemon.species)["types"][0]) if len(_get_pokemon(obs.active_pokemon.species)["types"]) > 0 else None
-        state_dict["active_pokemon"]["type_2"] = _normalize(_get_pokemon(obs.active_pokemon.species)["types"][1]) if len(_get_pokemon(obs.active_pokemon.species)["types"]) > 1 else None
+        state_dict["active_pokemon"]["type_1"] = _normalize(_get_pokemon(obs.active_pokemon.species)["types"][0]) if len(_get_pokemon(obs.active_pokemon.species).get("types", [])) > 0 else None
+        state_dict["active_pokemon"]["type_2"] = _normalize(_get_pokemon(obs.active_pokemon.species)["types"][1]) if len(_get_pokemon(obs.active_pokemon.species).get("types", [])) > 1 else None
         state_dict["active_pokemon"]["level"] = obs.active_pokemon.level
 
-        state_dict["active_pokemon"]["ability"] = obs.active_pokemon.ability if obs.active_pokemon.ability is not None else [_normalize(a) for a in _get_pokemon(obs.active_pokemon.species)["abilities"].values()]
+        state_dict["active_pokemon"]["ability"] = obs.active_pokemon.ability if obs.active_pokemon.ability is not None else [_normalize(a) for a in _get_pokemon(obs.active_pokemon.species).get("abilities", {}).values()]
         state_dict["active_pokemon"]["boosts"] = obs.active_pokemon.boosts
         state_dict["active_pokemon"]["hp_fraction"] = obs.active_pokemon.current_hp_fraction
         state_dict["active_pokemon"]["effects"] = [e.name for e in obs.active_pokemon.effects.keys()]
@@ -108,10 +108,10 @@ class State:
 
         state_dict["opp_active_pokemon"] = {}
         state_dict["opp_active_pokemon"]["species"] = obs.opponent_active_pokemon.species
-        state_dict["opp_active_pokemon"]["type_1"] = _normalize(_get_pokemon(obs.opponent_active_pokemon.species)["types"][0]) if len(_get_pokemon(obs.opponent_active_pokemon.species)["types"]) > 0 else None
-        state_dict["opp_active_pokemon"]["type_2"] = _normalize(_get_pokemon(obs.opponent_active_pokemon.species)["types"][1]) if len(_get_pokemon(obs.opponent_active_pokemon.species)["types"]) > 1 else None
+        state_dict["opp_active_pokemon"]["type_1"] = _normalize(_get_pokemon(obs.opponent_active_pokemon.species)["types"][0]) if len(_get_pokemon(obs.opponent_active_pokemon.species).get("types", [])) > 0 else None
+        state_dict["opp_active_pokemon"]["type_2"] = _normalize(_get_pokemon(obs.opponent_active_pokemon.species)["types"][1]) if len(_get_pokemon(obs.opponent_active_pokemon.species).get("types", [])) > 1 else None
         state_dict["opp_active_pokemon"]["level"] = obs.opponent_active_pokemon.level
-        state_dict["opp_active_pokemon"]["ability"] = obs.opponent_active_pokemon.ability if obs.opponent_active_pokemon.ability is not None else [_normalize(a) for a in _get_pokemon(obs.opponent_active_pokemon.species)["abilities"].values()]
+        state_dict["opp_active_pokemon"]["ability"] = obs.opponent_active_pokemon.ability if obs.opponent_active_pokemon.ability is not None else [_normalize(a) for a in _get_pokemon(obs.opponent_active_pokemon.species).get("abilities", {}).values()]
         state_dict["opp_active_pokemon"]["boosts"] = obs.opponent_active_pokemon.boosts
         state_dict["opp_active_pokemon"]["hp_fraction"] = obs.opponent_active_pokemon.current_hp_fraction
         state_dict["opp_active_pokemon"]["effects"] = [e.name for e in obs.opponent_active_pokemon.effects.keys()]
@@ -129,17 +129,17 @@ class State:
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["category"] = _normalize(m.category.name)
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["crit_ratio"] = m.crit_ratio
         state_dict["opp_active_pokemon"]["tera_type"] = _normalize(obs.opponent_active_pokemon.tera_type.name) if obs.opponent_active_pokemon.tera_type is not None else None
-        state_dict["opp_active_pokemon"]["stats"] = _get_pokemon(obs.opponent_active_pokemon.species)["baseStats"]
+        state_dict["opp_active_pokemon"]["stats"] = _get_pokemon(obs.opponent_active_pokemon.species).get("baseStats", {stat: -1 for stat in ["hp", "atk", "def", "spa", "spd", "spe"]})
 
         for i in range(len(obs.team)):
             p = list(obs.team.values())[i]
 
             state_dict[f"pokemon_{i+1}"] = {}
             state_dict[f"pokemon_{i+1}"]["species"] = p.species
-            state_dict[f"pokemon_{i+1}"]["type_1"] = _normalize(_get_pokemon(p.species)["types"][0]) if len(_get_pokemon(p.species)["types"]) > 0 else None
-            state_dict[f"pokemon_{i+1}"]["type_2"] = _normalize(_get_pokemon(p.species)["types"][1]) if len(_get_pokemon(p.species)["types"]) > 1 else None
+            state_dict[f"pokemon_{i+1}"]["type_1"] = _normalize(_get_pokemon(p.species)["types"][0]) if len(_get_pokemon(p.species).get("types", [])) > 0 else None
+            state_dict[f"pokemon_{i+1}"]["type_2"] = _normalize(_get_pokemon(p.species)["types"][1]) if len(_get_pokemon(p.species).get("types", [])) > 1 else None
             state_dict[f"pokemon_{i+1}"]["level"] = p.level
-            state_dict[f"pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in _get_pokemon(p.species)["abilities"].values()]
+            state_dict[f"pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in _get_pokemon(p.species).get("abilities", {}).values()]
             state_dict[f"pokemon_{i+1}"]["boosts"] = p.boosts
             state_dict[f"pokemon_{i+1}"]["hp_fraction"] = p.current_hp_fraction
             state_dict[f"pokemon_{i+1}"]["effects"] = [e.name for e in p.effects.keys()]
@@ -164,10 +164,10 @@ class State:
 
             state_dict[f"opp_pokemon_{i+1}"] = {}
             state_dict[f"opp_pokemon_{i+1}"]["species"] = p.species
-            state_dict[f"opp_pokemon_{i+1}"]["type_1"] = _normalize(_get_pokemon(p.species)["types"][0]) if len(_get_pokemon(p.species)["types"]) > 0 else None
-            state_dict[f"opp_pokemon_{i+1}"]["type_2"] = _normalize(_get_pokemon(p.species)["types"][1]) if len(_get_pokemon(p.species)["types"]) > 1 else None
+            state_dict[f"opp_pokemon_{i+1}"]["type_1"] = _normalize(_get_pokemon(p.species)["types"][0]) if len(_get_pokemon(p.species).get("types", [])) > 0 else None
+            state_dict[f"opp_pokemon_{i+1}"]["type_2"] = _normalize(_get_pokemon(p.species)["types"][1]) if len(_get_pokemon(p.species).get("types", [])) > 1 else None
             state_dict[f"opp_pokemon_{i+1}"]["level"] = p.level
-            state_dict[f"opp_pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in _get_pokemon(p.species)["abilities"].values()]
+            state_dict[f"opp_pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in _get_pokemon(p.species).get("abilities", {}).values()]
             state_dict[f"opp_pokemon_{i+1}"]["boosts"] = p.boosts
             state_dict[f"opp_pokemon_{i+1}"]["hp_fraction"] = p.current_hp_fraction
             state_dict[f"opp_pokemon_{i+1}"]["effects"] = [e.name for e in p.effects.keys()]
@@ -185,7 +185,7 @@ class State:
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["category"] = _normalize(m.category.name)
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["crit_ratio"] = m.crit_ratio
             state_dict[f"opp_pokemon_{i+1}"]["tera_type"] = _normalize(p.tera_type.name) if p.tera_type is not None else None
-            state_dict[f"opp_pokemon_{i+1}"]["stats"] = _get_pokemon(p.species)["baseStats"]
+            state_dict[f"opp_pokemon_{i+1}"]["stats"] = _get_pokemon(p.species).get("baseStats", {stat: -1 for stat in ["hp", "atk", "def", "spa", "spd", "spe"]})
         
         state_dict["turn"] = battle.turn
         state_dict["force_switch"] = battle.force_switch

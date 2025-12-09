@@ -34,9 +34,9 @@ def get_connection(dbname: str,
 def compute_state_hash(state_dict: dict[str, dict[str, Any]]) -> int:
     raw: str = json.dumps(state_dict, sort_keys=True, separators=(",", ":"))
     digest = hashlib.blake2b(raw.encode(), digest_size=8).digest()
-    hash = int.from_bytes(digest)
+    hash_int = int.from_bytes(digest, byteorder="big", signed=True)
+    return hash_int
 
-    return hash
 
 
 def insert_battle(conn: connection, state_dict: dict[str, dict[str, Any]]) -> int:
@@ -51,8 +51,10 @@ def insert_battle(conn: connection, state_dict: dict[str, dict[str, Any]]) -> in
                 raw_state
             )
             VALUES (%s, %s)
+            ON CONFLICT (state_hash)
+            DO UPDATE SET last_seen = NOW()
 
-            RETURNING state_id
+            RETURNING state_id;
             """,
             (
                 state_hash,
@@ -80,7 +82,7 @@ def insert_transition(conn: connection, step_index: int, episode_id: int, state_
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s)
 
-            RETURNING transition_id
+            RETURNING transition_id;
             """,
             (
                 step_index,
@@ -109,7 +111,7 @@ def insert_episode(conn: connection, version_id: int, start_time: datetime, end_
             )
             VALUES (%s, %s, %s)
 
-            RETURNING episode_id
+            RETURNING episode_id;
             """,
             (
                 version_id,
@@ -134,7 +136,7 @@ def insert_model(conn: connection, date_created: date, checkpoint_path: str, met
             )
             VALUES (%s, %s, %s)
 
-            RETURNING version_id
+            RETURNING version_id;
             """,
             (
                 date_created,
@@ -161,7 +163,7 @@ def insert_battle_embedding(conn: connection, state_id: int, embedding: list[flo
             )
             VALUES (%s, %s)
 
-            RETURNING embedding_id
+            RETURNING embedding_id;
             """,
             (
                 state_id,
@@ -187,9 +189,24 @@ def get_best_transitions(conn: connection, batch_size: int) -> list[tuple[Any, .
                 terminal
             FROM transition
             ORDER BY reward DESC
-            LIMIT %s
+            LIMIT %s;
             """,
             (batch_size,),
         )
         
         return cur.fetchall()
+
+
+def clear_database(conn: connection):
+    with conn.cursor() as cur:
+        cur.execute("""
+            TRUNCATE TABLE
+                transition,
+                battle_state,
+                battle_state_embedding,
+                episode,
+                model_version
+            RESTART IDENTITY CASCADE;
+        """)
+        
+    conn.commit()

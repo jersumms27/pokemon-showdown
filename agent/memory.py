@@ -3,6 +3,7 @@ from collections import deque
 from psycopg2.extensions import connection
 
 from .state import Transition
+from db.connection import get_best_transitions
 
 class ExperienceReplay:
     # (s, a, r, s', terminal)
