@@ -6,7 +6,8 @@ from poke_env.battle.move import Move
 from poke_env.player.battle_order import BattleOrder, SingleBattleOrder
 
 from .model import DQN
-from .state import State
+from .state import State, Transition
+from .memory import ExperienceReplay
 
 import torch
 import torch.nn as nn
@@ -22,6 +23,10 @@ class BotBoi(Player):
         self.model: DQN = dqn_model
         self.device: torch.device = device
         self.epsilon: float = 0.1
+
+        self.memory: ExperienceReplay | None = None
+        self.last_state: State | None = None
+        self.last_action: int | None = None
 
         self.model.to(device)
 
@@ -85,7 +90,16 @@ class BotBoi(Player):
         return SingleBattleOrder(*actions[idx])
     
 
-    def choose_move(self, battle: AbstractBattle) -> BattleOrder | Awaitable[BattleOrder]:
+    def _update_memory(self, state: State, action: int) -> None:
+        if self.last_state is not None and self.last_action is not None and self.memory is not None:        
+            transition: Transition = Transition(self.last_state, self.last_action, state)
+            self.memory.push(transition)
+
+        self.last_state = state
+        self.last_action = action
+    
+
+    def act(self, battle: AbstractBattle) -> int:
         state: State = State(battle)
         state_vec: Tensor = torch.tensor(state.state_vector, dtype=torch.float32, device=self.device).unsqueeze(0)
 
@@ -102,5 +116,24 @@ class BotBoi(Player):
         else:
             idx = int(q_values.argmax())
         
-        action: SingleBattleOrder = self._idx_to_action(battle, idx)
+        self._update_memory(state, idx)
+        
+        return idx
+    
+
+    def choose_move(self, battle: AbstractBattle) -> BattleOrder | Awaitable[BattleOrder]:
+        action: SingleBattleOrder = self._idx_to_action(battle, self.act(battle))
         return action
+    
+
+    async def battle(self, opponent: Player, memory: ExperienceReplay) -> None:
+        self.memory = memory
+        self.last_state = None
+        self.last_action = None
+
+        await self.battle_against(opponent)
+        print("finished battle")
+
+        self.memory = None
+        self.last_state = None
+        self.last_action = None

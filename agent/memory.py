@@ -2,7 +2,7 @@ import random
 from collections import deque
 from psycopg2.extensions import connection
 
-from state import Transition
+from .state import Transition
 
 class ExperienceReplay:
     # (s, a, r, s', terminal)

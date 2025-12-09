@@ -11,6 +11,17 @@ with open("poke-env/pokemon.json") as f:
     POKEMON: dict[str, Any] = json.load(f)
 POKEMON_IDX: dict[str, int] = {_normalize(name): idx for idx, name in enumerate([p["name"] for p in POKEMON.values()])}
 
+def _get_pokemon(name: str) -> dict[str, Any]:
+    n: str = _normalize(name)
+    if n in POKEMON:
+        return POKEMON[n]
+    
+    for k in POKEMON.keys():
+        if k in n:
+            return POKEMON[k]
+    
+    return {}
+
 def _get_pokemon_idx(p: str) -> int:
     if p in POKEMON_IDX:
         return POKEMON_IDX[p]
@@ -42,7 +53,7 @@ WEATHER_IDX = {name: idx for idx, name in enumerate(WEATHERS)}
 FIELDS = ['electric_terrain', 'grassy_terrain', 'psychic_terrain', 'trick_room']
 FIELD_IDX = {name: idx for idx, name in enumerate(FIELDS)}
 
-TYPES = ["bug", "dark", "dragon", "electric", "fairy", "fighting", "fire", "flying", "ghost", "grass", "ground", "ice", "normal", "poison", "psychic", "rock", "steel", "water"]
+TYPES = ["bug", "dark", "dragon", "electric", "fairy", "fighting", "fire", "flying", "ghost", "grass", "ground", "ice", "normal", "poison", "psychic", "rock", "steel", "water", "three_question_marks", "stellar"]
 TYPE_IDX = {name: idx for idx, name in enumerate(TYPES)}
 
 EFFECTS = ['attract', 'battle_bond', 'charge', 'confusion', 'court_change', 'cud_chew', 'dancer', 'destiny_bond', 'disable', 'disguise', 'electric_terrain', 'encore', 'fallen1', 'fallen2', 'fallen3', 'fallen4', 'fallen5', 'fickle_beam', 'flash_fire', 'future_sight', 'glaive_rush', 'hadron_engine', 'heal_bell', 'heal_block', 'ice_face', 'leech_seed', 'leppa_berry', 'magma_storm', 'magnet_rise', 'no_retreat', 'orichalcum_pulse', 'poltergeist', 'protosynthesis', 'protosynthesisatk', 'protosynthesisdef', 'protosynthesisspa', 'psychic_terrain', 'quarkdriveatk', 'quarkdrivedef', 'quarkdrivespe', 'quark_drive', 'salt_cure', 'shed_skin', 'slow_start', 'sticky_hold', 'sticky_web', 'struggle', 'substitute', 'supreme_overlord', 'synchronize', 'taunt', 'tera_shell', 'tera_shift', 'throat_chop', 'tidy_up', 'toxic_debris', 'trapped', 'trick', 'typechange', 'vital_spirit', 'whirlpool', 'yawn', 'zero_to_hero']
@@ -71,11 +82,11 @@ class State:
 
         state_dict["active_pokemon"] = {}
         state_dict["active_pokemon"]["species"] = obs.active_pokemon.species
-        state_dict["active_pokemon"]["type_1"] = _normalize(POKEMON[obs.active_pokemon.species]["types"][0]) if len(POKEMON[obs.active_pokemon.species]["types"]) > 0 else None
-        state_dict["active_pokemon"]["type_2"] = _normalize(POKEMON[obs.active_pokemon.species]["types"][1]) if len(POKEMON[obs.active_pokemon.species]["types"]) > 1 else None
+        state_dict["active_pokemon"]["type_1"] = _normalize(_get_pokemon(obs.active_pokemon.species)["types"][0]) if len(_get_pokemon(obs.active_pokemon.species)["types"]) > 0 else None
+        state_dict["active_pokemon"]["type_2"] = _normalize(_get_pokemon(obs.active_pokemon.species)["types"][1]) if len(_get_pokemon(obs.active_pokemon.species)["types"]) > 1 else None
         state_dict["active_pokemon"]["level"] = obs.active_pokemon.level
 
-        state_dict["active_pokemon"]["ability"] = obs.active_pokemon.ability if obs.active_pokemon.ability is not None else [_normalize(a) for a in POKEMON[obs.active_pokemon.species]["abilities"].values()]
+        state_dict["active_pokemon"]["ability"] = obs.active_pokemon.ability if obs.active_pokemon.ability is not None else [_normalize(a) for a in _get_pokemon(obs.active_pokemon.species)["abilities"].values()]
         state_dict["active_pokemon"]["boosts"] = obs.active_pokemon.boosts
         state_dict["active_pokemon"]["hp_fraction"] = obs.active_pokemon.current_hp_fraction
         state_dict["active_pokemon"]["effects"] = [e.name for e in obs.active_pokemon.effects.keys()]
@@ -97,10 +108,10 @@ class State:
 
         state_dict["opp_active_pokemon"] = {}
         state_dict["opp_active_pokemon"]["species"] = obs.opponent_active_pokemon.species
-        state_dict["opp_active_pokemon"]["type_1"] = _normalize(POKEMON[obs.opponent_active_pokemon.species]["types"][0]) if len(POKEMON[obs.opponent_active_pokemon.species]["types"]) > 0 else None
-        state_dict["opp_active_pokemon"]["type_2"] = _normalize(POKEMON[obs.opponent_active_pokemon.species]["types"][1]) if len(POKEMON[obs.opponent_active_pokemon.species]["types"]) > 1 else None
+        state_dict["opp_active_pokemon"]["type_1"] = _normalize(_get_pokemon(obs.opponent_active_pokemon.species)["types"][0]) if len(_get_pokemon(obs.opponent_active_pokemon.species)["types"]) > 0 else None
+        state_dict["opp_active_pokemon"]["type_2"] = _normalize(_get_pokemon(obs.opponent_active_pokemon.species)["types"][1]) if len(_get_pokemon(obs.opponent_active_pokemon.species)["types"]) > 1 else None
         state_dict["opp_active_pokemon"]["level"] = obs.opponent_active_pokemon.level
-        state_dict["opp_active_pokemon"]["ability"] = obs.opponent_active_pokemon.ability if obs.opponent_active_pokemon.ability is not None else [_normalize(a) for a in POKEMON[obs.opponent_active_pokemon.species]["abilities"].values()]
+        state_dict["opp_active_pokemon"]["ability"] = obs.opponent_active_pokemon.ability if obs.opponent_active_pokemon.ability is not None else [_normalize(a) for a in _get_pokemon(obs.opponent_active_pokemon.species)["abilities"].values()]
         state_dict["opp_active_pokemon"]["boosts"] = obs.opponent_active_pokemon.boosts
         state_dict["opp_active_pokemon"]["hp_fraction"] = obs.opponent_active_pokemon.current_hp_fraction
         state_dict["opp_active_pokemon"]["effects"] = [e.name for e in obs.opponent_active_pokemon.effects.keys()]
@@ -118,17 +129,17 @@ class State:
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["category"] = _normalize(m.category.name)
             state_dict["opp_active_pokemon"][f"move_{i+1}"]["crit_ratio"] = m.crit_ratio
         state_dict["opp_active_pokemon"]["tera_type"] = _normalize(obs.opponent_active_pokemon.tera_type.name) if obs.opponent_active_pokemon.tera_type is not None else None
-        state_dict["opp_active_pokemon"]["stats"] = POKEMON[obs.opponent_active_pokemon.species]["baseStats"]
+        state_dict["opp_active_pokemon"]["stats"] = _get_pokemon(obs.opponent_active_pokemon.species)["baseStats"]
 
         for i in range(len(obs.team)):
             p = list(obs.team.values())[i]
 
             state_dict[f"pokemon_{i+1}"] = {}
             state_dict[f"pokemon_{i+1}"]["species"] = p.species
-            state_dict[f"pokemon_{i+1}"]["type_1"] = _normalize(POKEMON[p.species]["types"][0]) if len(POKEMON[p.species]["types"]) > 0 else None
-            state_dict[f"pokemon_{i+1}"]["type_2"] = _normalize(POKEMON[p.species]["types"][1]) if len(POKEMON[p.species]["types"]) > 1 else None
+            state_dict[f"pokemon_{i+1}"]["type_1"] = _normalize(_get_pokemon(p.species)["types"][0]) if len(_get_pokemon(p.species)["types"]) > 0 else None
+            state_dict[f"pokemon_{i+1}"]["type_2"] = _normalize(_get_pokemon(p.species)["types"][1]) if len(_get_pokemon(p.species)["types"]) > 1 else None
             state_dict[f"pokemon_{i+1}"]["level"] = p.level
-            state_dict[f"pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in POKEMON[p.species]["abilities"].values()]
+            state_dict[f"pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in _get_pokemon(p.species)["abilities"].values()]
             state_dict[f"pokemon_{i+1}"]["boosts"] = p.boosts
             state_dict[f"pokemon_{i+1}"]["hp_fraction"] = p.current_hp_fraction
             state_dict[f"pokemon_{i+1}"]["effects"] = [e.name for e in p.effects.keys()]
@@ -153,10 +164,10 @@ class State:
 
             state_dict[f"opp_pokemon_{i+1}"] = {}
             state_dict[f"opp_pokemon_{i+1}"]["species"] = p.species
-            state_dict[f"opp_pokemon_{i+1}"]["type_1"] = _normalize(POKEMON[p.species]["types"][0]) if len(POKEMON[p.species]["types"]) > 0 else None
-            state_dict[f"opp_pokemon_{i+1}"]["type_2"] = _normalize(POKEMON[p.species]["types"][1]) if len(POKEMON[p.species]["types"]) > 1 else None
+            state_dict[f"opp_pokemon_{i+1}"]["type_1"] = _normalize(_get_pokemon(p.species)["types"][0]) if len(_get_pokemon(p.species)["types"]) > 0 else None
+            state_dict[f"opp_pokemon_{i+1}"]["type_2"] = _normalize(_get_pokemon(p.species)["types"][1]) if len(_get_pokemon(p.species)["types"]) > 1 else None
             state_dict[f"opp_pokemon_{i+1}"]["level"] = p.level
-            state_dict[f"opp_pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in POKEMON[p.species]["abilities"].values()]
+            state_dict[f"opp_pokemon_{i+1}"]["ability"] = p.ability if p.ability is not None else [_normalize(a) for a in _get_pokemon(p.species)["abilities"].values()]
             state_dict[f"opp_pokemon_{i+1}"]["boosts"] = p.boosts
             state_dict[f"opp_pokemon_{i+1}"]["hp_fraction"] = p.current_hp_fraction
             state_dict[f"opp_pokemon_{i+1}"]["effects"] = [e.name for e in p.effects.keys()]
@@ -174,7 +185,7 @@ class State:
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["category"] = _normalize(m.category.name)
                 state_dict[f"opp_pokemon_{i+1}"][f"move_{j+1}"]["crit_ratio"] = m.crit_ratio
             state_dict[f"opp_pokemon_{i+1}"]["tera_type"] = _normalize(p.tera_type.name) if p.tera_type is not None else None
-            state_dict[f"opp_pokemon_{i+1}"]["stats"] = POKEMON[p.species]["baseStats"]
+            state_dict[f"opp_pokemon_{i+1}"]["stats"] = _get_pokemon(p.species)["baseStats"]
         
         state_dict["turn"] = battle.turn
         state_dict["force_switch"] = battle.force_switch
@@ -186,6 +197,9 @@ class State:
         state_dict["used_z_move"] = battle.used_z_move
         state_dict["dynamax_turns_left"] = battle.dynamax_turns_left
         state_dict["opponent_dynamax_turns_left"] = battle.opponent_dynamax_turns_left
+
+        state_dict["battle_finished"] = battle.finished
+        state_dict["won"] = battle.won
 
         state_dict["available_moves"] = [m.id for m in battle.available_moves]
         state_dict["available_switches"] = [p.species for p in battle.available_switches]
@@ -347,6 +361,10 @@ class State:
         vector.append(self.state_dict["dynamax_turns_left"])
         # opponent dynamax turns left
         vector.append(self.state_dict["opponent_dynamax_turns_left"])
+        # battle finished
+        vector.append(float(self.state_dict["battle_finished"] == True))
+        # battle won
+        vector.append(float(self.state_dict["won"] == True))
         # available moves
         vector.extend([MOVE_IDX[m] for m in self.state_dict["available_moves"]] + [-1] * (4 - len(self.state_dict["available_moves"])))
         # available switches
@@ -368,12 +386,26 @@ class State:
 
 
 class Transition:
-    def __init__(self, state: State, action: int, next_state: State, reward: float, terminal: bool = False) -> None:
+    def __init__(self, state: State, action: int, next_state: State, terminal: bool = False) -> None:
         self.state: State = state
         self.next_state: State = next_state
         self.action: int = action
-        self.reward: float = reward
+        self.reward: float = self._calculate_reward()
         self.terminal: bool = terminal
+    
+
+    def _calculate_reward(self) -> float:
+        num_pokemon_1: int = sum([1 if f"pokemon_{i+1}" in self.state.state_dict else 0 for i in range(6)])
+        num_pokemon_2: int = sum([1 if f"pokemon_{i+1}" in self.next_state.state_dict else 0 for i in range(6)])
+        num_opp_pokemon_1: int = sum([1 if f"opp_pokemon_{i+1}" in self.state.state_dict else 0 for i in range(6)])
+        num_opp_pokemon_2: int = sum([1 if f"opp_pokemon_{i+1}" in self.next_state.state_dict else 0 for i in range(6)])
+
+        health_1: float = sum([self.state.state_dict[f"pokemon_{i+1}"]["hp_fraction"] for i in range(num_pokemon_1)]) / float(num_pokemon_1)
+        health_2: float = sum([self.next_state.state_dict[f"pokemon_{i+1}"]["hp_fraction"] for i in range(num_pokemon_2)]) / float(num_pokemon_2)
+        opp_health_1: float = sum([self.state.state_dict[f"opp_pokemon_{i+1}"]["hp_fraction"] for i in range(num_opp_pokemon_1)]) / float(num_opp_pokemon_1)
+        opp_health_2: float = sum([self.next_state.state_dict[f"opp_pokemon_{i+1}"]["hp_fraction"] for i in range(num_opp_pokemon_2)]) / float(num_opp_pokemon_2)
+
+        return (health_2 - health_1) - (opp_health_2 - opp_health_1)
     
 
     def __str__(self) -> str:
