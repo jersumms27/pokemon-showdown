@@ -9,7 +9,7 @@ import db.connection as db
 
 from poke_env.player import Player
 from psycopg2.extensions import connection
-from datetime import datetime, date
+from datetime import datetime
 
 import torch
 from torch import Tensor
@@ -26,11 +26,13 @@ class DQNTrainer:
                  device: torch.device,
                  model_checkpoint: str,
                  conn: connection | None,
+                 epsilon: float = 1.0,
+                 epsilon_decay: float = 0.99999,
                  gamma: float = 0.99,
                  lr: float = 1e-4,
                  batch_size: int = 64,
                  train_freq: int = 4,
-                 target_update_freq: int = 1000
+                 target_update_freq: int = 200
     ) -> None:
         self.conn: connection | None = conn
         self.agent: BotBoi = agent
@@ -38,6 +40,9 @@ class DQNTrainer:
         self.memory: ExperienceReplay = memory
         self.optimizer: torch.optim.Optimizer = optimizer
         self.device: torch.device = device
+
+        self.epsilon: float = epsilon
+        self.epsilon_decay: float = epsilon_decay
 
         self.gamma: float = gamma
         self.batch_size: int = batch_size
@@ -75,7 +80,8 @@ class DQNTrainer:
 
 
     async def run_episode(self) -> None:
-        await self.agent.battle(self.opponent, self.memory, self.episode_buffer)
+        await self.agent.battle(self.opponent, self.memory, self.episode_buffer, self.epsilon)
+        self.epsilon = max(self.epsilon * self.epsilon_decay, 0.05)
 
 
     def update_model(self) -> None:
@@ -122,7 +128,7 @@ class DQNTrainer:
         if self.conn is None:
             return -1
         
-        metrics: dict[str, Any] = {"gamma": self.gamma, "lr": lr, "notes": notes}
+        metrics: dict[str, Any] = {"gamma": self.gamma, "lr": lr, "epsilon_decay": self.epsilon_decay, "notes": notes}
         metrics_json: str = json.dumps(metrics)
 
         version_id = db.insert_model(self.conn, datetime.now().date(), checkpoint_path, metrics_json)

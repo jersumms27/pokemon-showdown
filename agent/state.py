@@ -219,7 +219,7 @@ class State:
             move_vector: list[float] = []
 
             # name
-            move_vector.append(MOVE_IDX[self.state_dict[pokemon_key][move_key]["name"]])
+            move_vector.append(MOVE_IDX.get(self.state_dict[pokemon_key][move_key]["name"], -1))
             # accuracy
             move_vector.append(self.state_dict[pokemon_key][move_key]["accuracy"])
             # type
@@ -366,7 +366,7 @@ class State:
         # battle won
         vector.append(float(self.state_dict["won"] == True))
         # available moves
-        vector.extend([MOVE_IDX[m] for m in self.state_dict["available_moves"]] + [-1] * (4 - len(self.state_dict["available_moves"])))
+        vector.extend([MOVE_IDX.get(m, -1) for m in self.state_dict["available_moves"]] + [-1] * (4 - len(self.state_dict["available_moves"])))
         # available switches
         vector.extend([_get_pokemon_idx(s) for s in self.state_dict["available_switches"]] + [-1] * (5 - len(self.state_dict["available_switches"])))
         # can dynamax

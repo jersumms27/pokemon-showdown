@@ -25,3 +25,7 @@ class ExperienceReplay:
 
     def __len__(self) -> int:
         return len(self.memory)
+    
+
+    def __getitem__(self, idx: int) -> Transition:
+        return self.memory[idx]

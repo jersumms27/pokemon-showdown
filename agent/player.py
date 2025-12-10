@@ -22,12 +22,12 @@ class BotBoi(Player):
     
         self.model: DQN = dqn_model
         self.device: torch.device = device
-        self.epsilon: float = 0.1
 
         self.memory: ExperienceReplay | None = None
         self.episode_buffer: list[Transition] = []
         self.last_state: State | None = None
         self.last_action: int | None = None
+        self.epsilon: float | None = None
 
         self.model.to(device)
 
@@ -122,7 +122,8 @@ class BotBoi(Player):
         else:
             idx = int(q_values.argmax())
         
-        self._update_memory(state, idx)
+        if idx != -1:
+            self._update_memory(state, idx)
         
         return idx
     
@@ -133,15 +134,21 @@ class BotBoi(Player):
         return action
     
 
-    async def battle(self, opponent: Player, memory: ExperienceReplay, episode_buffer: list[Transition]) -> None:
+    async def battle(self, opponent: Player, memory: ExperienceReplay, episode_buffer: list[Transition], epsilon: float) -> None:
         self.memory = memory
         self.episode_buffer = episode_buffer
         self.last_state = None
         self.last_action = None
+        self.epsilon = epsilon
 
         await self.battle_against(opponent)
+
+        if self.episode_buffer:
+            t_last: Transition = episode_buffer[-1]
+            t_last.terminal = True
 
         self.memory = None
         self.episode_buffer = []
         self.last_state = None
         self.last_action = None
+        self.epsilon = None

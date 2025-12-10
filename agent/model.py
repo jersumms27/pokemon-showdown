@@ -28,7 +28,7 @@ class DQN(nn.Module):
             output = F.relu(hidden_layer(output))
             
             if residual.shape == output.shape:
-                output += residual
+                output = output + residual
 
             output = self.dropout(output)
         
