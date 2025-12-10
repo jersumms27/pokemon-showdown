@@ -11,4 +11,5 @@
 | 12/6/2025 | Create state representations: json and vector | 7
 | 12/7/2025 | Debug state vector | 3
 | 12/8/2025 | Create and test player object | 3
-| **TOTAL** | | **30** |
+| 12/9/2025 | Fix/improve RL algorithm | 5
+| **TOTAL** | | **35** |

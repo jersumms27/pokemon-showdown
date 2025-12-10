@@ -55,7 +55,7 @@ class DQNTrainer:
         self.target_model: DQN = deepcopy(agent.model).to(device)
         self.target_model.eval()
 
-        self.version_id: int = self.dump_model_to_db(model_checkpoint, lr, notes="Initial model (random initial weights)")
+        self.version_id: int = 5 # self.dump_model_to_db(model_checkpoint, lr, notes="Initial model (random initial weights)")
     
 
     async def train_model(self, num_episodes: int) -> None:
